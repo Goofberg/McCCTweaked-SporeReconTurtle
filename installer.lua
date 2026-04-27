@@ -7,7 +7,6 @@ local function download(url, path)
     return false
   end
 
-  -- Create folder if needed
   local dir = fs.getDir(path)
   if dir ~= "" and not fs.exists(dir) then
     fs.makeDir(dir)
@@ -22,16 +21,24 @@ local function download(url, path)
   return true
 end
 
--- Get manifest
 local res = http.get(base .. "manifest.json")
 if not res then error("Failed to fetch manifest") end
 
 local manifest = textutils.unserializeJSON(res.readAll())
 res.close()
 
--- Download all files
 for _, file in ipairs(manifest.files) do
   download(base .. file, file)
 end
 
-print("✅ Full repo installed!")
+local this = shell.getRunningProgram()
+
+local f = fs.open("cleanup.lua", "w")
+f.write("sleep(0.5)\n")
+f.write("if fs.exists('" .. this .. "') then fs.delete('" .. this .. "') end\n")
+f.write("fs.delete('cleanup.lua')\n")
+f.close()
+
+shell.run("cleanup.lua")
+
+print("Full repo installed!")
