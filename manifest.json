@@ -5,7 +5,7 @@
     "nav.lua",
     "FSM.lua",
     "states/mining.lua",
-    "reconSpore.lua",
-    "refuel.lua"
+    "states/reconSpore.lua",
+    "states/refuel.lua"
   ]
 }
