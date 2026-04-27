@@ -1,4 +1,4 @@
-local base = "https://raw.githubusercontent.com/Goofberg/McCCTweaked-SporeReconTurtle/blob/main/"
+local base = "https://raw.githubusercontent.com/Goofberg/McCCTweaked-SporeReconTurtle/main/"
 
 local function download(url, path)
   local res = http.get(url)
